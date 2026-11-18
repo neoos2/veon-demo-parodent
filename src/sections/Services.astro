@@ -1,0 +1,63 @@
+---
+import Section from "../components/Section.astro";
+import FutureLink from "../components/FutureLink.astro";
+import Icon from "../components/Icon.astro";
+import { SOON, directions, specials, implantBrands, phoneMain } from "../data/parodent";
+---
+<Section id="services" class="section" rec="UX-R008" labelledby="services-title">
+  <div class="container">
+    <div class="section__head">
+      <h2 id="services-title">Послуги</h2>
+      <p class="section__lead">Дванадцять напрямів для дорослих і дітей в усіх п’яти клініках.</p>
+    </div>
+    <div class="svc">
+      <ul class="svc__list">
+        {directions.map((d) => (
+          <li><FutureLink note={SOON} align="start" class="svc__row"><span class="svc__name">{d}</span><Icon name="arrow" size={22} class="svc__arrow" /></FutureLink></li>
+        ))}
+      </ul>
+      <figure class="svc__photo">
+        <img src="img/implant-tray-sharp-520.webp" srcset="img/implant-tray-sharp-520.webp 520w, img/implant-tray-sharp-900.webp 900w" sizes="(min-width: 1024px) 28vw, 90vw" width="520" height="650" alt="Набір інструментів для імплантації в одній з клінік Пародент" loading="lazy" decoding="async" />
+      </figure>
+    </div>
+    <p class="svc__more">Також: {specials.join(", ")}. Імплантологія — системи {implantBrands}.</p>
+    <div class="calm">
+      <p class="calm__text">Лікування без страху — седація закисом азоту і медикаментозний сон, для дорослих і дітей.</p>
+      <a class="btn btn--primary" href={phoneMain.href}><Icon name="phone" size={18} />Подзвонити</a>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .svc { display: grid; gap: var(--s-6); }
+  .svc__list { display: grid; border-top: 1px solid var(--color-border); }
+  .svc__list li { border-bottom: 1px solid var(--color-border); }
+  .svc__list :global(.svc__row) {
+    display: flex; width: 100%; justify-content: space-between; gap: var(--s-4); min-height: 56px; padding: var(--s-3) var(--s-2);
+    text-decoration: none; transition: background-color 180ms var(--ease-out);
+  }
+  .svc__name { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.375rem, 1.1rem + 1vw, 2rem); line-height: 1.2; }
+  .svc__list :global(.svc__arrow) { flex: none; color: var(--color-muted); transition: transform 180ms var(--ease-out), color 180ms var(--ease-out); }
+  .svc__list :global(.svc__row:hover), .svc__list :global(.svc__row:focus-visible) { background: var(--color-surface); }
+  .svc__photo { margin: 0; }
+  .svc__photo img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+  @media (min-width: 1024px) { .svc__photo { position: relative; min-height: 20rem; } .svc__photo img { position: absolute; inset: 0; height: 100%; aspect-ratio: auto; } }
+  .svc__more { margin-top: var(--s-6); color: var(--color-muted); max-width: 60rem; }
+  .calm { margin-top: var(--s-6); background: var(--color-surface); padding: var(--s-5); display: grid; gap: var(--s-4); align-items: center; }
+  .calm__text { font-family: var(--font-display); font-size: var(--fs-h3); line-height: 1.2; font-weight: 500; max-width: 40ch; }
+  .calm .btn { justify-self: start; }
+  @media (max-width: 767px) { .svc__photo { display: none; } .calm .btn { justify-self: stretch; } }
+  @media (min-width: 768px) {
+    .svc__list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gap); grid-auto-flow: column; grid-template-rows: repeat(6, auto); }
+    .calm { grid-template-columns: minmax(0, 1fr) auto; padding: var(--s-6) var(--s-7); }
+  }
+  @media (min-width: 1024px) {
+    .svc { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); column-gap: var(--gap); align-items: stretch; }
+  }
+  @media (hover: hover) and (min-width: 768px) {
+    .svc__list :global(.svc__row:hover .svc__arrow), .svc__list :global(.svc__row:focus-visible .svc__arrow) { transform: translateX(4px); color: var(--color-text); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .svc__list :global(.svc__row:hover .svc__arrow), .svc__list :global(.svc__row:focus-visible .svc__arrow) { transform: none; }
+  }
+</style>

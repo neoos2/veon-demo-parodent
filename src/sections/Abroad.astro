@@ -1,0 +1,81 @@
+---
+import Section from "../components/Section.astro";
+import Icon from "../components/Icon.astro";
+import { telegram, whatsapp } from "../data/parodent";
+const places = [
+  { country: "США", place: "Glendale, AZ, 16080 N 59th Ave", status: "клініка-партнер", phone: "+1 (623) 398 68 08" },
+  { country: "Канада", place: "Etobicoke, ON, 2318 Lake Shore Blvd West, Unit 202", status: "клініка-партнер", phone: "416-201-4440" },
+  { country: "Польща", place: "Варшава, ul. Postępu 7A, 02-676", status: "", phone: "+48 22 257 12 81" },
+];
+---
+<Section id="abroad" class="section" rec="UX-R012" labelledby="abroad-title">
+  <div class="container">
+    <div class="ab">
+      <figure class="ab__photo">
+        <img src="img/flags-960.webp" srcset="img/flags-640.webp 640w, img/flags-960.webp 960w" sizes="(min-width: 1024px) 56vw, 92vw" width="960" height="600" alt="Прапори України, США і Канади над входом клініки Пародент на вул. Шевченка, 87А" loading="lazy" decoding="async" />
+        <figcaption>Прапори над входом клініки на вул. Шевченка, 87А.</figcaption>
+      </figure>
+      <div class="ab__text">
+        <h2 id="abroad-title">Лікування у Львові для українців за кордоном</h2>
+        <div class="ab__steps">
+          <div><h3 class="ab__step">Там</h3><p>Лікар клініки-партнера оглядає, робить знімки і складає план лікування.</p></div>
+          <div><h3 class="ab__step">Тут</h3><p>План передають у Львів, і лікування проходить в одній з п’яти клінік Пародент.</p></div>
+        </div>
+        <p class="ab__note">Гарантія діє в країні, де проведено лікування.</p>
+      </div>
+    </div>
+
+    <div class="ab__lower">
+    <ul class="places">
+      {places.map((p) => (
+        <li class="place">
+          <h3>{p.country}</h3>
+          <p class="place__where">{p.place}{p.status && <span class="place__status">{p.status}</span>}</p>
+          <p class="place__phone num">{p.phone}</p>
+        </li>
+      ))}
+    </ul>
+    <figure class="warsaw">
+      <img src="img/warsaw-480.webp" srcset="img/warsaw-480.webp 480w, img/warsaw-900.webp 900w" sizes="(min-width: 768px) 360px, 92vw" width="480" height="360" alt="Вітрина клініки Parodent у Варшаві, ul. Postępu 7A" loading="lazy" decoding="async" />
+      <figcaption>Варшава, ul. Postępu 7A.</figcaption>
+    </figure>
+    </div>
+
+    <div class="ab__foot">
+      <p>Адміністратори говорять українською, англійською і польською; лікарі — англійською, польською і французькою. Написати у Львів:</p>
+      <div class="ab__act">
+        <a class="btn" href={telegram} rel="noopener" target="_blank"><Icon name="telegram" size={18} />Telegram</a>
+        <a class="btn" href={whatsapp} rel="noopener" target="_blank"><Icon name="whatsapp" size={18} />WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .ab { display: grid; gap: var(--s-6); }
+  .ab__photo { margin: 0; }
+  .ab__photo img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  figcaption { margin-top: var(--s-2); font-size: var(--fs-small); color: var(--color-muted); }
+  .ab__text { display: grid; gap: var(--s-5); align-content: start; }
+  .ab__steps { display: grid; gap: var(--s-5); grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--color-text); padding-top: var(--s-4); }
+  .ab__step { margin-bottom: var(--s-2); }
+  .ab__note { font-weight: 500; }
+  .ab__lower { margin-top: var(--s-8); display: grid; gap: var(--s-5); }
+  .places { display: grid; border-top: 1px solid var(--color-border-ui); }
+  .place { display: grid; gap: var(--s-1); padding-block: var(--s-4); border-bottom: 1px solid var(--color-border-ui); }
+  .place__where { display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-3); }
+  .place__status { font-weight: 500; color: var(--color-accent); }
+  .place__phone { font-size: 1.25rem; font-weight: 500; }
+  .warsaw { margin: 0; max-width: 420px; }
+  .warsaw img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .ab__foot { margin-top: var(--s-7); display: grid; gap: var(--s-4); max-width: 48rem; }
+  .ab__act { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
+  @media (min-width: 768px) {
+    .place { grid-template-columns: 10rem minmax(0, 1fr) auto; align-items: baseline; gap: var(--s-5); }
+    .ab__act { display: flex; }
+  }
+  @media (min-width: 1024px) {
+    .ab { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: var(--s-8); align-items: end; }
+    .ab__lower { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); column-gap: var(--gap); align-items: start; }
+  }
+</style>

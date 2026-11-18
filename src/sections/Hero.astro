@@ -1,0 +1,102 @@
+---
+import Section from "../components/Section.astro";
+import Icon from "../components/Icon.astro";
+import { clinics, hours, phoneMain, telegram, whatsapp } from "../data/parodent";
+---
+<Section id="hero" class="hero" rec="UX-R001,GA-R001,MA-R004,SE-R007,SP-R001,SP-R003" labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__text">
+      <h1 id="hero-title" data-rec="SP-R005">Стоматологія Пародент <span class="nw">у Львові —</span> п’ять клінік повного циклу</h1>
+      <p class="hero__lead">Лікуємо дорослих і дітей: від діагностики й гігієни до імплантації, ортодонтії та медикаментозного сну.</p>
+    </div>
+    <div class="hero__act">
+      <a class="btn btn--primary hero__book" href={phoneMain.href} data-rec="SP-R002,SP-R004">Записатися</a>
+      <a class="hero__phone num" href={phoneMain.href} data-rec="SP-R004">{phoneMain.label}</a>
+      <div class="hero__chans" data-rec="UX-R006">
+        <a class="btn hero__chan" href={telegram} rel="noopener" target="_blank"><Icon name="telegram" size={18} />Telegram</a>
+        <a class="btn hero__chan" href={whatsapp} rel="noopener" target="_blank"><Icon name="whatsapp" size={18} />WhatsApp</a>
+      </div>
+      <p class="hero__hours">{hours.full}</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <ul class="street" aria-label="П’ять клінік Пародент у Львові">
+      {clinics.map((c, i) => (
+        <li class="street__item" style={`--i:${i}`}>
+          <a class="facade" href={`#${c.id}`}>
+            <span class="facade__frame">
+              <img
+                src={`img/street-${c.img}-400.webp`}
+                srcset={`img/street-${c.img}-400.webp 400w, img/street-${c.img}-800.webp 800w`}
+                sizes="(min-width: 768px) 24vw, 18vw"
+                width="400" height="400" alt={c.alt}
+                loading="eager" decoding="async" fetchpriority={i === 0 ? "high" : "auto"}
+              />
+            </span>
+            <span class="facade__cap">
+              <span class="facade__street">{c.street}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Section>
+
+<style>
+  :global(.hero) { padding-block: clamp(1.5rem, .8rem + 2vw, 2.75rem) clamp(2.5rem, 1.5rem + 1.5vw, 2.5rem); }
+  .hero__grid { display: grid; gap: var(--s-5); }
+  h1 { font-size: var(--fs-h1); line-height: 1.04; letter-spacing: -.01em; text-wrap: balance; }
+  .nw { white-space: nowrap; }
+  .hero__lead { margin-top: var(--s-4); font-size: var(--fs-lead); max-width: 36rem; }
+  .hero__act { display: grid; gap: var(--s-3); align-content: start; }
+  .hero__book { width: 100%; font-size: 1.0625rem; }
+  .hero__phone { display: none; }
+  .hero__chans { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-2); }
+  .hero__chan { padding-inline: var(--s-3); }
+  .hero__hours { font-size: var(--fs-small); color: var(--color-muted); }
+
+  .street { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; margin-top: var(--s-6); }
+  .facade { display: block; text-decoration: none; color: inherit; }
+  .facade__frame { display: block; overflow: hidden; aspect-ratio: 9 / 20; background: var(--color-surface); }
+  .facade__frame img { width: 100%; height: 100%; object-fit: cover; transition: transform 200ms var(--ease-out); }
+  .facade__cap { display: none; }
+  .facade:active .facade__frame img { transform: scale(.98); transition-duration: 120ms; }
+
+  @media (min-width: 768px) {
+    .hero__act { grid-template-columns: auto auto; justify-content: start; align-items: center; column-gap: var(--s-5); }
+    .hero__book { width: auto; padding-inline: var(--s-7); }
+    .hero__hours { grid-column: 1 / -1; }
+    .hero__phone { display: block; font-size: 1.5rem; font-weight: 500; text-decoration: none; justify-self: start; min-height: 44px; }
+    .hero__phone:hover { color: var(--color-accent); }
+    .street { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, .85fr) minmax(0, 1.05fr) minmax(0, .95fr); margin-top: clamp(2rem, 1rem + 2.5vw, 3.5rem); }
+    .facade__frame { aspect-ratio: auto; height: clamp(15rem, 6rem + 14vw, 19rem); }
+    .facade__cap { display: grid; gap: var(--s-1); padding: var(--s-3) var(--s-3) 0 0; }
+    .facade__street { font-family: var(--font-display); font-size: clamp(1.125rem, .9rem + .5vw, 1.375rem); font-weight: 600; line-height: 1.2; justify-self: start; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 200ms var(--ease-out); }
+  }
+  @media (min-width: 1024px) {
+    .hero__grid { grid-template-columns: minmax(0, 9fr) minmax(0, 3fr); column-gap: var(--gap); align-items: end; }
+    .hero__act { grid-template-columns: 1fr; justify-content: stretch; align-items: start; }
+    .hero__book { width: 100%; padding-inline: var(--s-5); }
+  }
+  @media (min-width: 1024px) and (max-width: 1199px) { h1 { font-size: 3.75rem; } }
+  @media (hover: hover) {
+    .facade:hover .facade__frame img { transform: scale(1.03); }
+    .facade:hover .facade__street { background-size: 100% 1px; }
+  }
+  .facade:focus-visible .facade__frame img { transform: scale(1.03); }
+  .facade:focus-visible .facade__street { background-size: 100% 1px; }
+  .facade:focus-visible { outline-offset: 4px; }
+
+  /* Effect 1: the street opens, facade by facade. Text of the first screen is never animated. */
+  @keyframes street-open { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+  :global(.js) .facade__frame { animation: street-open 400ms var(--ease-out) both; }
+  @media (min-width: 768px) {
+    :global(.js) .facade__frame { animation-duration: 700ms; animation-delay: calc(var(--i) * 60ms + 120ms); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .facade__frame { animation: none; clip-path: none; }
+    .facade:hover .facade__frame img, .facade:focus-visible .facade__frame img, .facade:active .facade__frame img { transform: none; }
+  }
+</style>

@@ -1,0 +1,50 @@
+---
+import Section from "../components/Section.astro";
+import FutureLink from "../components/FutureLink.astro";
+import Icon from "../components/Icon.astro";
+import { SOON, prices, telegram } from "../data/parodent";
+---
+<Section id="prices" class="section" rec="UX-R009" labelledby="prices-title">
+  <div class="container prices">
+    <div class="section__head prices__head">
+      <h2 id="prices-title">Ціни</h2>
+      <p class="section__lead">Орієнтири з прейскуранта клініки, у гривнях.</p>
+      <p class="prices__fine">Ціни — за прейскурантом клініки; актуальність уточнюйте в адміністратора.</p>
+      <div class="prices__act">
+        <a class="btn" href={telegram} rel="noopener" target="_blank"><Icon name="telegram" size={18} />Уточнити в Telegram</a>
+        <FutureLink note={SOON} align="start" class="prices__full">Повний прейскурант</FutureLink>
+      </div>
+    </div>
+    <div class="prices__body">
+      <table class="menu">
+        <caption class="visually-hidden">Ціни на окремі послуги, грн</caption>
+        <tbody>
+          {prices.map((p) => (
+            <tr>
+              <th scope="row">{p.name}{p.note && <span class="menu__note">, {p.note}</span>}</th>
+              <td class="num">{p.price} <span class="menu__cur">грн</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .menu { width: 100%; border-collapse: collapse; border-top: 1px solid var(--color-text); }
+  .menu th, .menu td { padding: var(--s-4) 0; border-bottom: 1px solid var(--color-border); vertical-align: baseline; }
+  .menu th { text-align: left; font-weight: 400; font-size: clamp(1rem, .95rem + .25vw, 1.125rem); padding-right: var(--s-5); }
+  .menu__note { font-weight: 500; }
+  .menu td { text-align: right; font-weight: 500; font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem); }
+  .menu__cur { font-size: 1rem; font-weight: 400; color: var(--color-muted); }
+  .prices__fine { font-size: var(--fs-body); max-width: 30rem; }
+  .prices__act { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-5); }
+  .prices__act :global(.prices__full) { min-height: 44px; font-weight: 500; }
+  @media (max-width: 767px) { .prices__act .btn { width: 100%; } }
+  @media (max-width: 1023px) { .prices__head { margin-bottom: var(--s-6); } }
+  @media (min-width: 1024px) {
+    .prices { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: var(--gap); }
+    .prices__head { align-content: start; }
+  }
+</style>

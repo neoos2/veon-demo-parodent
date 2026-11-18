@@ -1,0 +1,24 @@
+---
+import Icon from "./Icon.astro";
+import { phoneMain, telegram, whatsapp } from "../data/parodent";
+---
+<nav class="bbar on-dark" aria-label="Швидкий зв’язок" data-rec="UX-R002,SP-R004">
+  <a class="bbar__btn bbar__btn--call" href={phoneMain.href}><Icon name="phone" size={18} />Подзвонити</a>
+  <a class="bbar__btn" href={telegram} rel="noopener" target="_blank"><Icon name="telegram" size={18} />Telegram</a>
+  <a class="bbar__btn" href={whatsapp} rel="noopener" target="_blank"><Icon name="whatsapp" size={18} />WhatsApp</a>
+</nav>
+
+<style>
+  .bbar { display: none; }
+  @media (max-width: 767px) {
+    .bbar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: var(--s-1);
+      padding: var(--s-2) var(--s-2) calc(var(--s-2) + env(safe-area-inset-bottom)); background: var(--color-dark);
+      transition: transform 250ms var(--ease-out);
+    }
+  }
+  .bbar__btn { display: flex; align-items: center; justify-content: center; gap: var(--s-2); min-height: 48px; color: var(--color-bg); text-decoration: none; font-weight: 500; font-size: .9375rem; border: 1px solid var(--color-border-ui); border-radius: var(--radius); }
+  .bbar__btn:active { transform: scale(.98); }
+  .bbar__btn--call { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-ink); }
+  @media (prefers-reduced-motion: reduce) { .bbar { transition: none; } }
+</style>

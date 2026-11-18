@@ -1,0 +1,88 @@
+---
+import Section from "../components/Section.astro";
+import Icon from "../components/Icon.astro";
+import { guarantees, insurers, equipment, telegram } from "../data/parodent";
+---
+<Section id="trust" class="section section--surface" rec="UX-R011" labelledby="trust-title">
+  <div class="container">
+    <div class="section__head">
+      <h2 id="trust-title">Гарантії, ДМС і обладнання</h2>
+    </div>
+
+    <div class="scale" data-grow>
+      <h3 class="scale__title">Гарантія на лікування</h3>
+      <ul class="scale__rows">
+        {guarantees.map((g, i) => (
+          <li class:list={["bar", { "bar--key": g.key }]} style={`--w:${(g.months / 36).toFixed(4)}; --i:${i}`}>
+            <span class="bar__name">{g.name}{g.note && <span class="bar__note">{g.note}</span>}</span>
+            <span class="bar__term">{g.label}</span>
+            <span class="bar__track" aria-hidden="true"><span class="bar__fill"></span></span>
+          </li>
+        ))}
+      </ul>
+      <div class="scale__axis" aria-hidden="true"><span class="scale__ticks"><span>0</span><span>12 міс.</span><span>24 міс.</span><span>36 міс.</span></span></div>
+      <p class="scale__cond">Умова гарантії: профогляд і професійна гігієна щонайменше раз на 6 місяців.</p>
+    </div>
+
+    <div class="trust__cols">
+      <div class="trust__col">
+        <h3>Лікування за ДМС</h3>
+        <p>Приймаємо пацієнтів 26 страхових компаній і асистанс-сервісів, серед них {insurers.join(", ")}.</p>
+        <p>Якщо вашої компанії немає в переліку, домовимось про окрему схему з адміністратором.</p>
+        <a class="btn trust__act" href={telegram} rel="noopener" target="_blank"><Icon name="telegram" size={18} />Уточнити в Telegram</a>
+      </div>
+      <div class="trust__col">
+        <h3>Обладнання</h3>
+        <dl class="equip">
+          {equipment.map((e) => (<div><dt>{e.what}</dt><dd>{e.brands}</dd></div>))}
+        </dl>
+      </div>
+      <figure class="trust__photo">
+        <img src="img/surgery-640.webp" srcset="img/surgery-640.webp 640w, img/surgery-1100.webp 1100w" sizes="(min-width: 1024px) 30vw, 90vw" width="640" height="427" alt="Хірург і асистентка під час операції в клініці Пародент" loading="lazy" decoding="async" />
+      </figure>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .scale { border-top: 1px solid var(--color-text); padding-top: var(--s-5); }
+  .scale__title { font-family: var(--font-body); font-size: var(--fs-lead); font-weight: 500; margin-bottom: var(--s-4); }
+  .scale__rows { display: grid; gap: var(--s-4); }
+  .bar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s-1) var(--s-4); align-items: baseline; }
+  .bar__name { display: grid; }
+  .bar__note { font-size: var(--fs-small); color: var(--color-muted); }
+  .bar__term { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem); line-height: 1.1; white-space: nowrap; }
+  .bar__track { grid-column: 1 / -1; display: block; height: 12px; background: var(--color-bg); }
+  .bar__fill { display: block; height: 100%; width: calc(var(--w) * 100%); background: var(--color-text); transform-origin: left center; }
+  .bar--key .bar__fill { background: var(--color-brand); }
+  .scale__axis { display: none; }
+  .scale__cond { margin-top: var(--s-5); font-size: var(--fs-lead); }
+  .trust__cols { display: grid; gap: var(--s-6); margin-top: var(--s-8); }
+  .trust__col { display: grid; gap: var(--s-3); align-content: start; }
+  .trust__col p { color: var(--color-text); }
+  .equip { margin: 0; display: grid; gap: var(--s-2); }
+  .equip div { display: grid; }
+  .equip dt { color: var(--color-muted); font-size: var(--fs-small); }
+  .equip dd { margin: 0; font-weight: 500; }
+  .trust__photo { margin: 0; }
+  .trust__photo img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+  .trust__act { margin-top: var(--s-3); justify-self: start; }
+  @media (max-width: 767px) { .trust__act { width: 100%; } }
+  @media (min-width: 768px) {
+    .bar { grid-template-columns: 15rem 7rem minmax(0, 1fr); align-items: center; }
+    .bar__track { grid-column: auto; height: 20px; }
+    .scale__axis { display: grid; grid-template-columns: 15rem 7rem minmax(0, 1fr); column-gap: var(--s-4); margin-top: var(--s-3); font-size: var(--fs-small); color: var(--color-muted); }
+    .scale__ticks { grid-column: 3; display: flex; justify-content: space-between; border-top: 1px solid var(--color-border-ui); padding-top: var(--s-1); }
+  }
+  @media (min-width: 1024px) {
+    .trust__cols { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gap); align-items: stretch; }
+    .trust__photo { position: relative; min-height: 18rem; }
+    .trust__photo img { position: absolute; inset: 0; height: 100%; aspect-ratio: auto; }
+  }
+
+  /* Effect 3: bars grow to their term once, when the scale enters the screen. */
+  :global(.js) .scale:not(.is-visible) .bar__fill { transform: scaleX(0); }
+  .bar__fill { transition: transform 600ms var(--ease-out); transition-delay: calc(var(--i) * 80ms); }
+  @media (min-width: 768px) { .bar__fill { transition-duration: 900ms; } }
+  @media (prefers-reduced-motion: reduce) { :global(.js) .scale:not(.is-visible) .bar__fill { transform: none; } }
+</style>

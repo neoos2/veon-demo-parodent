@@ -1,0 +1,31 @@
+---
+import FutureLink from "./FutureLink.astro";
+import { SOON, socials } from "../data/parodent";
+const future = ["Відгуки", "Галерея робіт", "Подарункові сертифікати", "Навчальний центр", "Інтернатура", "Політика конфіденційності"];
+---
+<footer class="site-footer">
+  <div class="container site-footer__in">
+    <a class="site-footer__logo" href="#hero" aria-label="Пародент — на початок сторінки"><img src="img/logo.webp" width="200" height="137" alt="Parodent medical center" loading="lazy" /></a>
+    <ul class="site-footer__nav">
+      {future.map((f) => <li><FutureLink note={SOON} align="start">{f}</FutureLink></li>)}
+    </ul>
+    <ul class="site-footer__soc" aria-label="Пародент у соцмережах" data-rec="S-R008">
+      {socials.map((x) => <li><a class="link" href={x.href} rel="noopener" target="_blank">{x.name}</a></li>)}
+    </ul>
+    <p class="site-footer__copy">© Медичний центр стоматології «Пародент», Львів</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--color-surface); border-top: 1px solid var(--color-border); padding-block: var(--s-7) var(--s-8); }
+  .site-footer__in { display: grid; gap: var(--s-5); }
+  .site-footer__logo { justify-self: start; }
+  .site-footer__logo img { height: 56px; width: auto; }
+  .site-footer__nav { display: flex; flex-wrap: wrap; gap: 0 var(--s-5); }
+  .site-footer__nav :global(.future-link) { min-height: 44px; font-size: var(--fs-small); }
+  .site-footer__soc { display: flex; flex-wrap: wrap; gap: 0 var(--s-5); }
+  .site-footer__soc a { display: inline-flex; align-items: center; min-height: 44px; font-size: var(--fs-small); }
+  .site-footer__copy { font-size: var(--fs-small); color: var(--color-muted); }
+  @media (min-width: 1024px) { .site-footer__in { grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: var(--s-8); } .site-footer__soc, .site-footer__copy { grid-column: 2; } }
+  @media (max-width: 767px) { .site-footer { padding-bottom: calc(var(--s-8) + 64px); } }
+</style>

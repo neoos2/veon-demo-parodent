@@ -1,0 +1,33 @@
+---
+import Section from "../components/Section.astro";
+import FutureLink from "../components/FutureLink.astro";
+import { SOON, phoneMain } from "../data/parodent";
+---
+<Section id="for-dentists" class="section dent on-dark" rec="UX-R004" labelledby="dent-title">
+  <div class="container">
+    <h2 id="dent-title">Для стоматологів</h2>
+    <div class="dent__cols">
+      <div class="dent__col">
+        <h3>Навчальний центр Parodent Dental Club</h3>
+        <p>Понад 50 тем курсів на базі клініки. Офіційний провайдер балів БПР.</p>
+        <FutureLink note={SOON} class="btn" align="start">Курси навчального центру</FutureLink>
+      </div>
+      <div class="dent__col">
+        <h3>Інтернатура</h3>
+        <p>На базі п’яти львівських клінік, окремий кабінет з обладнанням SIRONA. Вартість — <span class="num">3600 грн</span> на місяць.</p>
+        <FutureLink note={SOON} class="btn" align="start">Умови інтернатури</FutureLink>
+      </div>
+    </div>
+    <p class="dent__phone">Запитання щодо курсів та інтернатури: <a class="link num" href={phoneMain.href}>{phoneMain.label}</a></p>
+  </div>
+</Section>
+
+<style>
+  :global(.dent) { background: var(--color-dark); color: var(--color-bg); padding-block: var(--s-9); }
+  .dent__cols { display: grid; gap: var(--s-7); margin-top: var(--s-6); }
+  .dent__col { display: grid; gap: var(--s-4); align-content: start; justify-items: start; border-top: 1px solid var(--color-border-ui); padding-top: var(--s-5); }
+  .dent__col p { max-width: 34rem; }
+  .dent__phone { margin-top: var(--s-7); }
+  .dent__phone a { display: inline-block; min-height: 44px; line-height: 44px; font-weight: 500; text-decoration-color: var(--color-border); }
+  @media (min-width: 768px) { .dent__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gap); } }
+</style>

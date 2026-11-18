@@ -1,0 +1,112 @@
+---
+import FutureLink from "./FutureLink.astro";
+import Icon from "./Icon.astro";
+import { SOON, phoneMain, telegram, whatsapp } from "../data/parodent";
+const nav = [
+  { href: "#services", label: "Послуги" },
+  { href: "#clinics", label: "Клініки" },
+  { href: "#prices", label: "Ціни" },
+  { href: "#trust", label: "Гарантії і ДМС" },
+  { href: "#abroad", label: "З-за кордону" },
+];
+---
+<header class="site-header" data-rec="UX-R004,UX-R002,UX-R006">
+  <div class="container site-header__bar">
+    <a class="logo" href="#hero" aria-label="Пародент — на початок сторінки">
+      <img src="img/logo.webp" width="200" height="137" alt="Parodent medical center" />
+    </a>
+
+    <nav class="main-nav" aria-label="Розділи головної">
+      <ul>
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        <li><FutureLink note={SOON}>Лікарі</FutureLink></li>
+      </ul>
+    </nav>
+
+    <div class="site-header__act">
+      <a class="hdr-phone num" href={phoneMain.href} data-rec="SP-R004">{phoneMain.short}</a>
+      <a class="hdr-chan" href={telegram} rel="noopener" target="_blank"><Icon name="telegram" size={18} />Telegram</a>
+      <a class="hdr-chan" href={whatsapp} rel="noopener" target="_blank"><Icon name="whatsapp" size={18} />WhatsApp</a>
+      <a class="btn hdr-book" href={phoneMain.href}>Записатися</a>
+      <ul class="lang" aria-label="Мова сайту">
+        <li><span class="lang__cur" aria-current="true">UA</span></li>
+        <li><FutureLink note={SOON} align="end">EN</FutureLink></li>
+        <li><FutureLink note={SOON} align="end">PL</FutureLink></li>
+      </ul>
+    </div>
+
+    <details class="m-menu">
+      <summary class="btn m-menu__btn"><span class="m-menu__open">Меню</span><span class="m-menu__close">Закрити</span></summary>
+      <div class="m-menu__panel">
+        <nav aria-label="Розділи головної (меню)">
+          <ul class="m-menu__list">
+            {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+            <li><FutureLink note={SOON} align="start">Лікарі</FutureLink></li>
+            <li><FutureLink note={SOON} align="start">Відгуки</FutureLink></li>
+            <li><a href="#for-dentists">Для стоматологів</a></li>
+            <li><a href="#contacts">Контакти</a></li>
+          </ul>
+        </nav>
+        <div class="m-menu__act">
+          <a class="btn btn--primary" href={phoneMain.href}><Icon name="phone" size={18} />{phoneMain.label}</a>
+          <a class="btn" href={telegram} rel="noopener" target="_blank"><Icon name="telegram" size={18} />Telegram</a>
+          <a class="btn" href={whatsapp} rel="noopener" target="_blank"><Icon name="whatsapp" size={18} />WhatsApp</a>
+        </div>
+        <ul class="lang lang--menu" aria-label="Мова сайту">
+          <li><span class="lang__cur" aria-current="true">Українська</span></li>
+          <li><FutureLink note={SOON} align="start">English</FutureLink></li>
+          <li><FutureLink note={SOON} align="start">Polski</FutureLink></li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 50; background: var(--color-bg); border-bottom: 1px solid var(--color-border); }
+  .site-header__bar { display: flex; align-items: center; gap: var(--s-5); min-height: var(--header-h); }
+  .logo { flex: none; display: block; padding: var(--s-1) 0; }
+  .logo img { width: auto; height: 52px; }
+  .main-nav { display: none; }
+  .main-nav ul { display: flex; gap: clamp(.9rem, .2rem + 1vw, 1.6rem); align-items: center; }
+  .main-nav a, .main-nav :global(.future-link) { display: inline-flex; align-items: center; min-height: 44px; font-size: .9375rem; font-weight: 500; text-decoration: none; }
+  .main-nav a { background: linear-gradient(currentColor, currentColor) 0 calc(100% - 10px) / 0 1px no-repeat; transition: background-size 180ms var(--ease-out); }
+  .main-nav a:hover, .main-nav a:focus-visible { background-size: 100% 1px; }
+  .site-header__act { display: none; align-items: center; gap: var(--s-4); margin-left: auto; }
+  .hdr-phone { font-size: 1.0625rem; font-weight: 500; text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
+  .hdr-phone:hover { color: var(--color-accent); }
+  .hdr-chan { display: inline-flex; align-items: center; gap: var(--s-2); min-height: 44px; font-size: .9375rem; text-decoration: none; }
+  .hdr-chan:hover { color: var(--color-accent); }
+  .hdr-book { min-height: 44px; padding-inline: var(--s-4); }
+  .lang { display: flex; gap: var(--s-3); font-size: .875rem; align-items: center; }
+  .lang__cur { font-weight: 600; }
+  .lang :global(.future-link) { min-height: 44px; color: var(--color-muted); }
+
+  .m-menu { margin-left: auto; }
+  .m-menu__btn { list-style: none; cursor: pointer; min-height: 44px; padding-inline: var(--s-4); }
+  .m-menu__btn::-webkit-details-marker { display: none; }
+  .m-menu__close, .m-menu[open] .m-menu__open { display: none; }
+  .m-menu[open] .m-menu__close { display: inline; }
+  .m-menu__panel {
+    position: absolute; left: 0; right: 0; top: 100%; max-height: calc(100dvh - var(--header-h)); overflow-y: auto;
+    background: var(--color-bg); border-bottom: 1px solid var(--color-border); padding: var(--s-4) var(--space) var(--s-6);
+    display: grid; gap: var(--s-5);
+  }
+  .m-menu__list { display: grid; }
+  .m-menu__list a, .m-menu__list :global(.future-link) { display: flex; align-items: center; min-height: 48px; font-family: var(--font-display); font-size: 1.375rem; font-weight: 500; text-decoration: none; border-bottom: 1px solid var(--color-border); }
+  .m-menu__list :global(.future-link) { color: var(--color-muted); }
+  .m-menu__act { display: grid; gap: var(--s-2); }
+  .lang--menu :global(.future-link) { min-height: 44px; }
+
+  @media (min-width: 768px) {
+    .site-header__act { display: flex; }
+    .hdr-chan, .site-header__act .lang { display: none; }
+  }
+  @media (min-width: 1200px) {
+    .main-nav { display: block; }
+    .hdr-chan, .site-header__act .lang { display: inline-flex; }
+    .m-menu { display: none; }
+    .site-header__act { gap: var(--s-4); }
+  }
+  @media (max-width: 767px) { .logo img { height: 44px; } }
+</style>

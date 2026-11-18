@@ -1,0 +1,50 @@
+---
+import Section from "../components/Section.astro";
+import Icon from "../components/Icon.astro";
+import { clinics, hours, phoneMain, phoneCallback, telegram, whatsapp, email, socials } from "../data/parodent";
+---
+<Section id="contacts" class="section section--surface contacts" rec="UX-R002,UX-R006" labelledby="contacts-title">
+  <div class="container">
+    <h2 id="contacts-title">Контакти</h2>
+    <div class="ct">
+      <div class="ct__col">
+        <a class="ct__main num" href={phoneMain.href} data-rec="SP-R004">{phoneMain.label}</a>
+        <p class="ct__hint">Запис у будь-яку з п’яти клінік, цей номер також у WhatsApp.</p>
+        <a class="ct__second num link" href={phoneCallback.href} data-rec="SP-R004">{phoneCallback.label}</a>
+        <p class="ct__hint">З цього номера передзвонюємо після запису.</p>
+        <div class="ct__chans">
+          <a class="btn" href={telegram} rel="noopener" target="_blank"><Icon name="telegram" size={18} />Telegram</a>
+          <a class="btn" href={whatsapp} rel="noopener" target="_blank"><Icon name="whatsapp" size={18} />WhatsApp</a>
+        </div>
+      </div>
+      <div class="ct__col">
+        <h3 class="ct__h">Адреси у Львові</h3>
+        <ul class="ct__list">{clinics.map((c) => <li><a class="link" href={`#${c.id}`}>{c.address}</a></li>)}</ul>
+        <p class="ct__hint">{hours.full}.</p>
+      </div>
+      <div class="ct__col">
+        <h3 class="ct__h">Пошта і соцмережі</h3>
+        <p class="ct__mail">{email}</p>
+        <ul class="ct__list" data-rec="S-R008">
+          {socials.map((x) => <li><a class="link" href={x.href} rel="noopener" target="_blank">{x.name}</a></li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  :global(.contacts) { padding-bottom: var(--s-8); }
+  .ct { display: grid; gap: var(--s-7); margin-top: var(--s-6); }
+  .ct__col { display: grid; gap: var(--s-2); align-content: start; justify-items: start; }
+  .ct__main { font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.5rem); font-weight: 500; text-decoration: none; line-height: 1.2; }
+  .ct__main:hover { color: var(--color-accent); }
+  .ct__second { font-size: 1.25rem; font-weight: 500; margin-top: var(--s-3); min-height: 44px; display: inline-flex; align-items: center; }
+  .ct__hint { color: var(--color-muted); font-size: var(--fs-small); }
+  .ct__chans { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-4); }
+  .ct__h { font-family: var(--font-body); font-size: var(--fs-body); font-weight: 500; color: var(--color-muted); }
+  .ct__list { display: grid; }
+  .ct__list a { display: inline-flex; align-items: center; min-height: 44px; font-size: 1.125rem; }
+  .ct__mail { font-size: 1.125rem; min-height: 44px; display: flex; align-items: center; }
+  @media (min-width: 1024px) { .ct { grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr); column-gap: var(--gap); } }
+</style>

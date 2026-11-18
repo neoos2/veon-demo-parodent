@@ -1,0 +1,45 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BottomBar from "../components/BottomBar.astro";
+import Hero from "../sections/Hero.astro";
+import Services from "../sections/Services.astro";
+import Clinics from "../sections/Clinics.astro";
+import Prices from "../sections/Prices.astro";
+import Trust from "../sections/Trust.astro";
+import Abroad from "../sections/Abroad.astro";
+import ForDentists from "../sections/ForDentists.astro";
+import Contacts from "../sections/Contacts.astro";
+import { clinics, socials } from "../data/parodent";
+
+const hoursSpec = [
+  { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "09:00", closes: "20:00" },
+  { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "09:00", closes: "16:00" },
+];
+const ld = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Organization", "@id": "#org", name: "Пародент", alternateName: "Parodent", telephone: "+380670002187",
+      sameAs: socials.map((x) => x.href) },
+    ...clinics.map((c) => ({
+      "@type": "Dentist", name: `Пародент, ${c.address}`, parentOrganization: { "@id": "#org" }, telephone: "+380670002187",
+      address: { "@type": "PostalAddress", streetAddress: c.address, addressLocality: "Львів", addressCountry: "UA" },
+      openingHoursSpecification: hoursSpec,
+    })),
+  ],
+};
+---
+<Base lang="uk" title="Стоматологія у Львові — мережа клінік Пародент, 5 адрес" description="Повний цикл для дорослих і дітей: терапія, імплантація, ортодонтія, медикаментозний сон. 5 клінік у Львові, Пн–Пт 9–20, Сб 9–16. Запис: +38 067 000 21 87">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(ld)} />
+  <Header slot="header" />
+  <Hero />
+  <Services />
+  <Clinics />
+  <Prices />
+  <Trust />
+  <Abroad />
+  <ForDentists />
+  <Contacts />
+  <Fragment slot="footer"><Footer /><BottomBar /></Fragment>
+</Base>
